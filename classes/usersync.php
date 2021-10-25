@@ -466,8 +466,8 @@ class local_usersynccsv_usersync
             }
             $user->lang = $CFG->lang;
             $user->mnethostid = $CFG->mnet_localhost_id;
-            $user->auth        = 'manual';
-            $user->confirmed   = 1;
+            //$user->auth        = 'manual';
+            //$user->confirmed   = 1;
             if (empty($user->city)) {
                 $user->city = "none";
             }
@@ -479,6 +479,9 @@ class local_usersynccsv_usersync
                 if (!property_exists($user, 'password')) {
                     $user->password = hash_internal_user_password($this->defpassowrd);
                 }
+                $user->auth        = 'saml2';
+                $user->confirmed   = 1;
+
                 $userid = $DB->insert_record('user', $user);
                 if (!$userid) {
                     return get_string('genericdberror', 'local_usersynccsv', 'user');
