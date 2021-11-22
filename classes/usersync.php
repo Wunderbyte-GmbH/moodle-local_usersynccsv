@@ -38,7 +38,7 @@ class local_usersynccsv_usersync
     /**
      * @var array Moodle required User fields
      */
-    private $requiredfields = ['username' , 'firstname', 'lastname', 'email'];
+    private $requiredfields = ['firstname', 'lastname'];
 
     /**
      * @var array custom user defined required fields
@@ -465,22 +465,42 @@ class local_usersynccsv_usersync
                 }
             }
             $user->lang = $CFG->lang;
-            $user->mnethostid = $CFG->mnet_localhost_id;
-            //$user->auth        = 'manual';
-            //$user->confirmed   = 1;
+            // $user->mnethostid = $CFG->mnet_localhost_id;
+            // $user->auth        = 'saml2';
+            // $user->confirmed   = 1;
+
             if (empty($user->city)) {
                 $user->city = "none";
             }
             if (empty($user->country)) {
                 $user->country = "no";
             }
+          
+            if (empty($user->username) && !empty($this->userkey)) {
+
+                $user->username = $userkey . "_suspended"; # here userkey is 'personalnummer' 
+                $user->email = $userkey . "_suspended@krages.at";               
+            }
+
+            if ($user->username == $userkey . "_suspended") {
+                $user->suspended = 1;
+
+                # CODE FOR UNENROLEMENT GOES HERE !!!
+
+            } else {
+                $user->suspended = 0;
+            }         
+
             if (!property_exists($user, 'id')) {
                 // Add the new user to Moodle.
                 if (!property_exists($user, 'password')) {
                     $user->password = hash_internal_user_password($this->defpassowrd);
                 }
+
+                # if user is new
                 $user->auth        = 'saml2';
                 $user->confirmed   = 1;
+                $user->mnethostid = 1;
 
                 $userid = $DB->insert_record('user', $user);
                 if (!$userid) {
