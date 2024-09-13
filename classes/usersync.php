@@ -483,9 +483,9 @@ class local_usersynccsv_usersync
             }
 
             if ($user->username == $userkey . "_suspended") {
-                $user->suspended = 1;
+                // $user->suspended = 1;
 
-                # CODE FOR UNENROLEMENT GOES HERE !!!
+                // # CODE FOR UNENROLEMENT GOES HERE !!!
 
             } else {
                 $user->suspended = 0;
