@@ -482,11 +482,8 @@ class local_usersynccsv_usersync
                 $user->email = $userkey . "_suspended@krages.at";               
             }
 
-            if ($user->username == $userkey . "_suspended") {
-                // $user->suspended = 1;
-
-                // # CODE FOR UNENROLEMENT GOES HERE !!!
-
+            if (isset($customfields['MLV']) && $customfields['MLV'] == '1287' && $customfields['Personalbereich'] != '0107') {
+                $user->suspended = 1;
             } else {
                 $user->suspended = 0;
             }         
