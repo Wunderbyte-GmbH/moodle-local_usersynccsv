@@ -481,12 +481,14 @@ class local_usersynccsv_usersync
                 $user->username = $userkey . "_suspended"; # here userkey is 'personalnummer' 
                 $user->email = $userkey . "_suspended@krages.at";               
             }
-
+            
+            /**
             if (isset($customfields['MLV']) && $customfields['MLV'] == '1287' && $customfields['Personalbereich'] != '0107') {
                 $user->suspended = 1;
             } else {
                 $user->suspended = 0;
-            }         
+            }
+            **/
 
             if (!property_exists($user, 'id')) {
                 // Add the new user to Moodle.
